@@ -3,6 +3,8 @@ use axum::{
     Router,
     extract::{Path, Query, Json}
 };
+use std::collections::HashMap;
+use serde::Deserialize;
 
 #[tokio::main]
 async fn main(){
@@ -10,6 +12,11 @@ let app = Router::new()
     .route("/" , get(root) )
     .route("/public", get(get_public_key).post(post_public))
     .route("/private/secure", get(get_private));
+
+//  Merge Router
+
+    // Router::new().merge(router_hello))
+
 }
 
 async fn root() {}
@@ -34,7 +41,37 @@ async fn get_user_team(Path((user_id, team_id)): Path<(u32, u64)>) -> String {
 // same as const [ slug ] = useParams(); in next,js
 async fn query(Query(params): Query<HashMap<String, String>>) {}
 
+// EXAMPLE to use it 
+
+async fn search(Query(params): Query<HashMap<String, String>>) -> String {
+    let name = params.get("name").unwrap_or(&"Guest".to_string());
+    format!("Hello, {}!", name)
+}
+
 // Buffer the request body and deserialize it as JSON into a
-// `serde_json::Value`. `Json` supports any type that implements
+// `serde_json::Value`. `Json` supports anyt ype that implements
 // `serde::Deserialize`.
 async fn json(Json(payload): Json<serde_json::Value>) {}
+
+
+// example 
+
+#[derive(Debug ,Deserialize)]
+struct CreateUser {
+    username: String,
+    email: String,
+}
+async fn create_user(Json(payload): Json<CreateUser>) -> String {
+    format!("Created user: {} with email: {}", payload.username, payload.email)
+}
+
+
+async fn router_hello () -> Router {
+    Router.new()
+        .route("/hello", get())
+        .route("/hello2", get())
+
+}
+async fn hello ()-> String {
+    return String("hellow")
+}
