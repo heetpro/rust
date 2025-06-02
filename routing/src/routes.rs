@@ -73,5 +73,15 @@ async fn router_hello () -> Router {
 
 }
 async fn hello ()-> String {
-    return String("hellow")
+    return String("hellow");
+}
+
+
+// define module
+// basically in typescript every file is a module but in rust we have to define it.
+// it contains function and structs and etc.
+pub mod hello {
+    pub fn say_hello() -> String {
+        return String("hello");
+    }
 }
