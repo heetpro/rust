@@ -13,7 +13,7 @@ let app = Router::new()
     .route("/public", get(get_public_key).post(post_public))
     .route("/private/secure", get(get_private));
 
-//  Merge Router
+//  Merge Router inside main function
 
     // Router::new().merge(router_hello))
 
