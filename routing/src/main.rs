@@ -3,7 +3,7 @@ use axum::{
     routing::get,
     Router,
 };
-
+// async handling
 #[tokio::main]
 async fn main(){
     let app = Router::new().route("/",get(|| async {"Hello, World!"}));
